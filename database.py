@@ -46,7 +46,7 @@ class DataBase:
         DM_landing_gear4    = DMLandingGear4    (self)
 
 
-        self.components     = [DM_body,\
+        self.components     = [ DM_body,\
                                 DM_thrust_chamber,\
                                 DM_fuel_tank,\
                                 DM_oxid_tank,\
@@ -82,6 +82,5 @@ class DataBase:
 
         self.p_cg = self.p_cg / self.m
 
-        print(self.m)
-        print(self.p_cg)
-        print(self.I)
+
+        
