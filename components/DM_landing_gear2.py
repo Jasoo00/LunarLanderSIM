@@ -1,17 +1,18 @@
 from base       import *
-from component  import Component
 
 
-class DMLandingGear2(Component):
+class DMLandingGear2:
 
     def __init__(self, DB):
 
-        m_0     = DB.components["DM_LANDING_GEAR2"].m_0
-        p_c     = DB.components["DM_LANDING_GEAR2"].p_c
-        p_cg    = DB.components["DM_LANDING_GEAR2"].p_cg
-        dim     = DB.components["DM_LANDING_GEAR2"].dim
+        params = DB.DM["DM_LANDING_GEAR2"]
 
-        super.__init__(m_0, p_cg, p_c, dim, DB)
+        self.m       = params["m_0"]
+        self.p_c     = array(params["p_c"]   )
+        self.p_cg    = array(params["p_cg"]  )
+        self.dim     = array(params["dim"]   )
+
+        self.DB      = DB
 
     
     def update(self):
