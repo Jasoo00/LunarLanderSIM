@@ -22,7 +22,7 @@ z = outer(2*ones(size(u)), cos(v))
 while True:
 
     t += 3600*1
-    i += 0.05
+    i += 0.1
 
     r_b = array([0.5*cos(i), 0.5*sin(i), 0.5])
 
