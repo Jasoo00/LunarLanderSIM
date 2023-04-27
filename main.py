@@ -2,7 +2,7 @@ from base       import *
 
 from components import *
 from database   import DataBase
-
+import matplotlib.pyplot as plt
 
 class LunarLanderSIM:
 
@@ -41,7 +41,8 @@ class LunarLanderSIM:
 
 if __name__ == "__main__":
 
-
+    plt.figure()
+    plt.show()
 
     inputs_path = "inputs.json"
 
