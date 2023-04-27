@@ -1,11 +1,12 @@
 import os
 import json
 
-from    numpy               import  array, zeros, ones, linspace,\
-                                    outer, size,\
-                                    deg2rad, rad2deg, cos, sin, tan, pi
+from    numpy   import  array, zeros, ones, linspace,\
+                        outer, size,\
+                        deg2rad, rad2deg, cos, sin, tan, pi
 
-import  matplotlib.pyplot   as      plt
+from    mpl_toolkits.mplot3d    import  Axes3D
+import  matplotlib.pyplot       as      plt
 
 M = 10e4            # mass of the moon
 G = 1               # gravity constant
