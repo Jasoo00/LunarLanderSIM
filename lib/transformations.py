@@ -45,3 +45,24 @@ def C_W2B(r,p,y):
     return R
 
 
+""" Angular Rate Transformation """
+
+def T_w2W(r,p,y):
+
+    R_1 = array([[ 1,      0,      0 ],
+                 [ 0, cos(r), sin(r) ],
+                 [ 0,-sin(r), cos(r) ]])
+    
+    R_2 = array([[ cos(p), 0,-sin(p) ],
+                 [      0, 1,      0 ],
+                 [ sin(p), 0, cos(p) ]])
+
+    R_3 = array([[ cos(y), sin(y), 0 ],
+                 [-sin(y), cos(y), 0 ],
+                 [      0,      0, 1 ]])
+
+    T_W2w = R_1 + R_1@R_2 + R_1@R_2@R_3
+
+    T_w2W = inv(T_W2w)
+
+    return T_w2W
