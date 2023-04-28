@@ -3,9 +3,9 @@
     "simulation_params":
     {
 
-        "PARAM_DELT"        :   0.01,
+        "PARAM_DELT"        :   0.1,
 
-        "PARAM_INIT_POSE"   :   [0,0,0,0,0,0,0,0,0,0,0,0]  
+        "PARAM_INIT_POSE"   :   [1e6,0,2e6,1500,200,0,0,0,0,0,0,0]  
     
     },
 
