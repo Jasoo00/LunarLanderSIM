@@ -31,8 +31,8 @@ class DataBase:
         self.t              = 0                                         # simulation time
         self.del_t          = sim_params["PARAM_DELT"]                  # simulation time interval
         self.x              = array(sim_params["PARAM_INIT_POSE"])      # simulation initial state
-        self.lat            = deg2rad(30)                               # land point latitude angle
-        self.lon            = deg2rad(30)                               # land point longitude angle
+        self.lat            = deg2rad(sim_params["PARAM_LANDPOINT_LAT"])# land point latitude angle
+        self.lon            = deg2rad(sim_params["PARAM_LANDPOINT_LON"])# land point longitude angle
 
         ### Model Parameters ###
 
@@ -118,7 +118,7 @@ class DataBase:
                             [-y_cgi,    x_cgi,      0]])
             
             self.I += p_cg_X @ (-p_cg_X) * m_i
-
+            
         self.p_cg = self.p_cg / self.m
 
 

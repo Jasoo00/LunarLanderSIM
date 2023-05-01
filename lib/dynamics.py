@@ -1,5 +1,5 @@
 from base   import *
-from lib    import *
+from lib.transformations    import *
 
 
 def f(x, t, DB):
@@ -9,8 +9,8 @@ def f(x, t, DB):
     O_i       = x[6:9]
     w_b       = x[9:12]
 
-    C_i2e     = C_I2E(t, DB.lon)
-    C_e2w     = C_E2W(DB.lat)
+    # C_i2e     = C_I2E(t, DB.lon)
+    # C_e2w     = C_E2W(DB.lat)
     C_i2b     = C_W2B(O_i[0],O_i[1],O_i[2])
     T_b2i     = T_w2W(O_i[0],O_i[1],O_i[2])
 
@@ -23,12 +23,11 @@ def f(x, t, DB):
     ###  ###
     r_i_dot   = C_i2b.T @ v_b
     
-    v_b_dot   = C_i2b @ (-r_i * G*M/(norm(r_i)**3)) + \
-                (1/DB.m) * sum_F
+    v_b_dot   = C_i2b @ (-r_i * G*M/(norm(r_i)**3)) + (1/DB.m) * sum_F
 
     O_i_dot   = T_b2i @ w_b
 
-    w_b_dot   = inv(DB.I) @ ( sum_M - cross(w_b,(DB.I@w_b)) )
+    w_b_dot   = inv(DB.I) @ ( sum_M - cross(w_b,(DB.I @ w_b)) )
 
     x_dot     = zeros(12)
 
@@ -38,3 +37,19 @@ def f(x, t, DB):
     x_dot[9:12] = w_b_dot
 
     return x_dot
+
+
+def update_state(DB):
+
+    ### RK4 Integration ###
+    x_1     = DB.x
+
+    h       = DB.del_t
+    K1      = f(x_1,0, DB)
+    K2      = f(x_1 + 0.5*h*K1,0, DB)
+    K3      = f(x_1 + 0.5*h*K2,0, DB)
+    K4      = f(x_1 + h*K3,0, DB)
+
+    x_2     = x_1 + (h/6)*(K1 + 2*K2 + 2*K3 + K4)
+
+    DB.x    = x_2

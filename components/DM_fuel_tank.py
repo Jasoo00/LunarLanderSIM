@@ -30,7 +30,7 @@ class DMFuelTank:
         p_scg        = self.p_c
         p_pcg        = self.p_c - array([ 0, 0, self.dim[0] * ( 1 - self.m_p / self.m_p0 ) ])
 
-        self.p_cg    = p_scg * self.m_s + p_pcg * self.m_p
+        self.p_cg    = (p_scg * self.m_s + p_pcg * self.m_p) / (self.m_p + self.m_s)
 
         if self.m_p < 0:  
 
