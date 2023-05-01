@@ -1,6 +1,7 @@
 from base       import *
 
 from components import *
+from lib        import *
 from database   import DataBase
 from visualizer import Visualizer
 
@@ -19,9 +20,10 @@ class Simulator:
         while True:
 
             self.DB.update_quantities()
-            self.DB.update_state()
+            
+            update_state(self.DB)
 
-            time.sleep(0)
+            time.sleep(0.01)
             
             self.DB.t += self.DB.del_t
 
