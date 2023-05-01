@@ -3,7 +3,7 @@ import json
 
 from    numpy               import  array, zeros, ones, linspace,\
                                     outer, size,\
-                                    deg2rad, rad2deg, cos, sin, tan, pi
+                                    deg2rad, rad2deg, cos, sin, tan, pi, arccos, dot
 
 import  matplotlib.pyplot   as      plt
 
