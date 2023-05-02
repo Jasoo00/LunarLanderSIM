@@ -9,22 +9,14 @@ def f(x, t, DB):
     O_i       = x[6:9]
     w_b       = x[9:12]
 
-    # C_i2e     = C_I2E(t, DB.lon)
-    # C_e2w     = C_E2W(DB.lat)
     C_i2b     = C_W2B(O_i[0],O_i[1],O_i[2])
     T_b2i     = T_w2W(O_i[0],O_i[1],O_i[2])
 
-
     sum_F     = DB.sum_F
     sum_M     = DB.sum_M
-    # print(sum_M)
-    # sum_M     = zeros(3)
 
     g_M       = C_i2b @ (-r_i * G*M/(norm(r_i)**3))
 
-    # print(sum_M)
-
-    ###  ###
     r_i_dot   = C_i2b.T @ v_b
     
     v_b_dot   = g_M + (1/DB.m) * sum_F - cross(w_b, v_b)
