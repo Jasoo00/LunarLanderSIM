@@ -1,6 +1,7 @@
 from base    import *
 from lib     import *
 
+
 t = 0
 i = 0
 
@@ -95,4 +96,4 @@ while True:
 
     plt.pause(0.1)
 
-plt.show()
+# plt.show()

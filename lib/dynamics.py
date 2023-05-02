@@ -15,6 +15,7 @@ def f(x, t, DB):
     sum_F     = DB.sum_F
     sum_M     = DB.sum_M
 
+
     g_M       = C_i2b @ (-r_i * G*M/(norm(r_i)**3))
 
     r_i_dot   = C_i2b.T @ v_b
@@ -35,10 +36,16 @@ def f(x, t, DB):
     DB.x_dot    = x_dot
     DB.g_M      = g_M
 
+    # print("sum_M",sum_M)
+    # print("w_b_dot",w_b_dot)
+    # print("w_b",w_b)
+    # print("O_i",O_i)
     return x_dot
 
 
 def update_state(DB):
+
+    ang_lim = 10
 
     ### RK4 Integration ###
     x_1     = DB.x

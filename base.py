@@ -5,7 +5,7 @@ import time
 import warnings
 
 from    numpy                   import  array, zeros, ones, eye, linspace,\
-                                        outer, size, cross, vstack, hstack,\
+                                        where, size, outer, cross, vstack, hstack,\
                                         deg2rad, rad2deg, cos, sin, tan, pi
 from    numpy.linalg            import  inv, norm
 from    threading               import  Thread
