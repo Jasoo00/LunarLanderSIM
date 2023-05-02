@@ -8,7 +8,7 @@ class DataBase:
     def __init__(self, inputs):
 
 
-        ### States ###
+        ### Quantities ###
 
         self.m              = 0                                         # total mass [kg]   : double
 
@@ -30,9 +30,13 @@ class DataBase:
         
         self.t              = 0                                         # simulation time
         self.del_t          = sim_params["PARAM_DELT"]                  # simulation time interval
-        self.x              = array(sim_params["PARAM_INIT_POSE"])      # simulation initial state
         self.lat            = deg2rad(sim_params["PARAM_LANDPOINT_LAT"])# land point latitude angle
         self.lon            = deg2rad(sim_params["PARAM_LANDPOINT_LON"])# land point longitude angle
+
+
+        ### State ###
+        self.x              = array(sim_params["PARAM_INIT_POSE"])      # simulation initial state
+        self.x_dot          = zeros(12)                                 # simulation initial state
 
         ### Model Parameters ###
 

@@ -103,7 +103,7 @@ class Visualizer(Thread):
             v_b = self.DB.x[3:6]
             O_i = self.DB.x[6:9]
             
-            x_dot = f(self.DB.x,0, self.DB)
+            x_dot = self.DB.x_dot
 
             r_i_dot = x_dot[:3]
             v_b_dot = x_dot[3:6]
@@ -114,16 +114,18 @@ class Visualizer(Thread):
 
             v_i_dot = C_i2b.T @ v_b_dot
 
-            
             gravity = C_i2b @ (-r_i * G*M/(norm(r_i)**3))
 
             # viz2.cla()
 
-            # viz2.quiver(0,0,0,1,0,0,color="red",arrow_length_ratio=0.1)
-            # viz2.quiver(0,0,0,0,1,0,color="green",arrow_length_ratio=0.1)
-            # viz2.quiver(0,0,0,0,0,1,color="blue",arrow_length_ratio=0.1)
+            # viz2.quiver(0,0,0,1,0,0,color="black",arrow_length_ratio=0.1)
+            # viz2.quiver(0,0,0,0,1,0,color="black",arrow_length_ratio=0.1)
+            # viz2.quiver(0,0,0,0,0,1,color="black",arrow_length_ratio=0.1)
+            
+            # viz2.text(1.1,0,0,r"$x_b$",color="black")
+            # viz2.text(0,1.1,0,r"$y_b$",color="black")
+            # viz2.text(0,0,1.1,r"$z_b$",color="black")
 
-            # viz2.quiver(0,0,0,gravity[0],gravity[1],gravity[2],color="black",arrow_length_ratio=0.1)
             # # viz2.scatter(0,0,0,r_b[0],r_b[1],r_b[2],color="black",arrow_length_ratio=0.1)
 
             # viz2.set_xlim(-1,1)
@@ -131,10 +133,11 @@ class Visualizer(Thread):
             # viz2.set_zlim(-1,1)
             # viz2.axis("off")
 
-            # viz2.quiver(0,0,0,v_i_dot[0],v_i_dot[1],v_i_dot[2],color="red",arrow_length_ratio=0.1,length=norm(v_i_dot))
-            # viz2.quiver(0,0,0,v_b_dot[0],v_b_dot[1],v_b_dot[2],color="green",arrow_length_ratio=0.1,length=norm(v_i_dot))
-            viz.quiver(r_b[0],r_b[1],r_b[2],v_i_dot[0],v_i_dot[1],v_i_dot[2],color="red",arrow_length_ratio=0.1,length=5e5*norm(v_i_dot))
-            viz.quiver(r_b[0],r_b[1],r_b[2],v_i[0],v_i[1],v_i[2],color="blue",arrow_length_ratio=0.1,length=norm(r_i_dot))
+            # viz2.quiver(0,0,0,v_b[0],v_b[1],v_b[2],color="blue",arrow_length_ratio=0.1,length=1e-7*norm(v_b))
+            # viz2.quiver(0,0,0,v_b_dot[0],v_b_dot[1],v_b_dot[2],color="red",arrow_length_ratio=0.1,length=0.1*norm(v_b_dot))
+
+            # viz.quiver(r_b[0],r_b[1],r_b[2],v_i_dot[0],v_i_dot[1],v_i_dot[2],color="red",arrow_length_ratio=0.1,length=5e5*norm(v_i_dot))
+            # viz.quiver(r_b[0],r_b[1],r_b[2],v_i[0],v_i[1],v_i[2],color="blue",arrow_length_ratio=0.1,length=5e-1*norm(r_i_dot))
 
             plt.pause(0.01)
 
