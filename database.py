@@ -34,6 +34,8 @@ class DataBase:
         self.x                  = array(sim_params["PARAM_INIT_POSE"])      # simulation initial state
         self.x_dot              = zeros(12)                                 # simulation initial state
         self.u                  = zeros(11)                                 # thrusts input [N] : ndarray(11,)
+        self.u[4]=0.0001
+        self.u[8]=0.0001
 
         self.sum_M              = zeros(3)                                  # sum of moments    : ndarray(3,)
         self.sum_F              = zeros(3)                                  # sum of thrusts    : ndarray(3,)

@@ -20,5 +20,5 @@ class AMRCS2ThrustChamber5:
     
     def update(self):
 
-        self.uvec    = self.DB.u[10] * array([0,0,1])
+        self.uvec    = self.DB.u[10] * array([1,0,0])
         self.Mvec    = cross(self.p_cg, self.uvec)
