@@ -15,6 +15,9 @@ class DMOxidTank:
         self.p_cg    = array(params["p_cg"]  )
         self.dim     = array(params["dim"]   )
 
+        self.uvec    = zeros(3)
+        self.Mvec    = zeros(3)
+
         self.I_sp    = DB.DM["DM_DE_THRUST_CHAMBER"]["I_sp"]
 
         self.DB      = DB

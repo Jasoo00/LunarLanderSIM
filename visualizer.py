@@ -21,7 +21,7 @@ class Visualizer(Thread):
 
         traj = zeros(3)
 
-        moon_u = linspace(0, 2 * pi, 10)
+        moon_u = linspace(0, 2 * pi, 20)
         moon_v = linspace(0, pi, 10)
         moon_x = outer(1.737e6*cos(moon_u), sin(moon_v))
         moon_y = outer(1.737e6*sin(moon_u), sin(moon_v))
@@ -91,12 +91,10 @@ class Visualizer(Thread):
 
             viz.plot(traj[1:,0],traj[1:,1],traj[1:,2],'k-')
 
-            viz.set_xlim(-3e6,3e6)
-            viz.set_ylim(-3e6,3e6)
-            viz.set_zlim(-3e6,3e6)
+            viz.set_xlim(-6e6,6e6)
+            viz.set_ylim(-6e6,6e6)
+            viz.set_zlim(-6e6,6e6)
             viz.axis("off")
-
-            # plt.pause(0.01)
 
 
             r_i = self.DB.x[:3]

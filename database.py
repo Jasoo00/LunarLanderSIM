@@ -16,10 +16,6 @@ class DataBase:
 
         self.p_cg           = zeros(3)                                  # CoG location [m]  : ndarray(3,)
 
-        self.u              = zeros(11)                                 # thrusts [N]       : ndarray(11,)
-
-        self.M              = zeros(3)                                  # sum of moments    : ndarray(3,)
-
 
         ### Params ###
         sim_params          = inputs["simulation_params"]               # simulation parameters
@@ -37,6 +33,14 @@ class DataBase:
         ### State ###
         self.x              = array(sim_params["PARAM_INIT_POSE"])      # simulation initial state
         self.x_dot          = zeros(12)                                 # simulation initial state
+        self.u              = zeros(11)                                 # thrusts input [N] : ndarray(11,)
+
+
+        self.sum_M          = zeros(3)                                  # sum of moments    : ndarray(3,)
+        self.sum_F          = zeros(3)                                  # sum of thrusts    : ndarray(3,)
+
+        self.g_M            = 0
+
 
         ### Model Parameters ###
 
@@ -69,27 +73,38 @@ class DataBase:
 
         for component in self.components: 
             
-            m_i     = component.m
-            p_cgi   = component.p_cg
+            m_i             = component.m
+            p_cgi           = component.p_cg
+
+            ### initial state ###
+            r_i             = self.x[:3]
+            O_i             = self.x[6:9]
+
+            C_i2b           = C_W2B(O_i[0],O_i[1],O_i[2])
+
+            self.g_M        = C_i2b @ (-r_i * G*M/(norm(r_i)**3))
+
+
+
 
             ### total mass ###
-            self.m += m_i
+            self.m          += m_i
 
             ### total cog ###
-            self.p_cg += m_i * p_cgi
+            self.p_cg       += m_i * p_cgi
 
             ### inertial matrix ###
-            x_cgi   = p_cgi[0]
-            y_cgi   = p_cgi[1]
-            z_cgi   = p_cgi[2]
+            x_cgi           = p_cgi[0]
+            y_cgi           = p_cgi[1]
+            z_cgi           = p_cgi[2]
 
-            p_cg_X = array([[0,     -z_cgi,     y_cgi],
-                            [z_cgi,     0,      -x_cgi],
-                            [-y_cgi,    x_cgi,      0]])
-            
-            self.I += p_cg_X @ (-p_cg_X) * m_i
+            p_cg_X          = array([[0,     -z_cgi,     y_cgi],
+                                     [z_cgi,     0,      -x_cgi],
+                                     [-y_cgi,    x_cgi,      0]])
+                    
+            self.I          += p_cg_X @ (-p_cg_X) * m_i
 
-        self.p_cg = self.p_cg / self.m
+        self.p_cg           = self.p_cg / self.m
 
 
     
@@ -99,12 +114,23 @@ class DataBase:
         self.p_cg = zeros(3)
         self.I = zeros((3,3))
 
+        self.sum_F = zeros(3)
+        self.sum_M = zeros(3)
+
         for component in self.components: 
 
             component.update()
             
-            m_i     = component.m
-            p_cgi   = component.p_cg
+            m_i         = component.m
+            p_cgi       = component.p_cg
+            F_i         = component.uvec
+            M_i         = component.Mvec
+    
+            # print(M_i)
+
+            ### force & moments ###
+            self.sum_F  += F_i
+            self.sum_M  += M_i
 
             ### total mass ###
             self.m += m_i
@@ -124,5 +150,7 @@ class DataBase:
             self.I += p_cg_X @ (-p_cg_X) * m_i
             
         self.p_cg = self.p_cg / self.m
+
+        # print("sum : ",self.sum_M)
 
 
