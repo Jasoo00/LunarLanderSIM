@@ -12,6 +12,9 @@ class DMLandingGear4:
         self.p_cg    = array(params["p_cg"]  )
         self.dim     = array(params["dim"]   )
 
+        self.uvec    = zeros(3)
+        self.Mvec    = zeros(3)
+
         self.DB      = DB
 
     

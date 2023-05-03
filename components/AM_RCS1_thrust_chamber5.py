@@ -1,11 +1,11 @@
 from base       import *
 
 
-class DMThrustChamber:
+class AMRCS1ThrustChamber5:
 
     def __init__(self, DB):
 
-        params = DB.DM["DM_DE_THRUST_CHAMBER"]
+        params = DB.AM["AM_RCS1_THRUST_CHAMBER5"]
 
         self.m       = params["m_0"]
         self.p_c     = array(params["p_c"]   )
@@ -20,5 +20,5 @@ class DMThrustChamber:
     
     def update(self):
 
-        self.uvec    = self.DB.u[0] * array([0,0,1])
+        self.uvec    = self.DB.u[5] * array([-1,0,0])
         self.Mvec    = cross(self.p_cg, self.uvec)

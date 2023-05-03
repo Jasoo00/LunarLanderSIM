@@ -61,8 +61,16 @@ def T_w2W(r,p,y):
                  [-sin(y), cos(y), 0 ],
                  [      0,      0, 1 ]])
 
-    T_W2w = R_1 + R_1@R_2 + R_1@R_2@R_3
+    T_W2w = zeros((3,3))
 
-    T_w2W = inv(T_W2w)
+    T_W2w[:,0] += R_1[:,0]
+    T_W2w[:,1] += R_1@R_2[:,1]
+    T_W2w[:,2] += R_1@R_2@R_3[:,2]
+
+    try: T_w2W = inv(T_W2w)
+    except: 
+        T_w2W = eye(3)
+        print("*** Singular ***")
+
 
     return T_w2W
