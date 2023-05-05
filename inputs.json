@@ -5,6 +5,8 @@
 
         "PARAM_DELT"            :   10,
 
+        "PARAM_FRAME"           :   30,
+
         "PARAM_INIT_POSE"       :   [0,0,5e6, 1000,0,0, 0,0,0, 0,0,0],
         
         "PARAM_LANDPOINT_LAT"   :   30,

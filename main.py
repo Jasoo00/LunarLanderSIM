@@ -1,9 +1,10 @@
-from base       import *
+from base               import *
+from components         import *
+from lib                import *
 
-from components import *
-from lib        import *
-from database   import DataBase
-from visualizer import Visualizer
+from database           import DataBase
+from visualizer         import Visualizer
+from physics_engine     import PhysicsEngine
 
 
 class Simulator:
@@ -12,20 +13,17 @@ class Simulator:
     def __init__(self, inputs):
 
         ### Initialize ###
-        self.DB     = DataBase(inputs)
-        self.viz    = Visualizer(self.DB)
+        self.DB     = DataBase      (inputs)
+        self.viz    = Visualizer    (self.DB)
+        self.PE     = PhysicsEngine (self.DB)
 
-        self.viz.start()
+        self.PE.start()
 
         while True:
 
-            self.DB.update_quantities()
-            
-            update_state(self.DB)
+            self.viz.run()
 
-            time.sleep(0.01)
-            
-            self.DB.t += self.DB.del_t
+            plt.pause(self.DB.rate)
 
 
 if __name__ == "__main__":
