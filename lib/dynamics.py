@@ -36,10 +36,6 @@ def f(x, t, DB):
     DB.x_dot    = x_dot
     DB.g_M      = g_M
 
-    # print("sum_M",sum_M)
-    # print("w_b_dot",w_b_dot)
-    # print("w_b",w_b)
-    # print("O_i",O_i)
     return x_dot
 
 

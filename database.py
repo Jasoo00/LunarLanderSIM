@@ -24,7 +24,7 @@ class DataBase:
 
         ### Simulation Parameters ###
         
-        self.rate               = 1/sim_params["PARAM_FRAME"]                # simulation update rate
+        self.rate               = 1/sim_params["PARAM_FRAME"]               # simulation update rate
         self.t                  = 0                                         # simulation time
         self.del_t              = sim_params["PARAM_DELT"]                  # simulation time interval
         self.lat                = deg2rad(sim_params["PARAM_LANDPOINT_LAT"])# land point latitude angle

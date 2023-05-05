@@ -18,12 +18,7 @@ class Simulator:
         self.PE     = PhysicsEngine (self.DB)
 
         self.PE.start()
-
-        while True:
-
-            self.viz.run()
-
-            plt.pause(self.DB.rate)
+        self.viz.run()
 
 
 if __name__ == "__main__":
