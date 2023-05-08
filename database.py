@@ -24,6 +24,7 @@ class DataBase:
 
         ### Simulation Parameters ###
         
+        self.rate               = 1/sim_params["PARAM_FRAME"]               # simulation update rate
         self.t                  = 0                                         # simulation time
         self.del_t              = sim_params["PARAM_DELT"]                  # simulation time interval
         self.lat                = deg2rad(sim_params["PARAM_LANDPOINT_LAT"])# land point latitude angle
@@ -36,6 +37,7 @@ class DataBase:
         self.u                  = zeros(11)                                 # thrusts input [N] : ndarray(11,)
         self.u[4]=0.0001
         self.u[8]=0.0001
+
 
         self.sum_M              = zeros(3)                                  # sum of moments    : ndarray(3,)
         self.sum_F              = zeros(3)                                  # sum of thrusts    : ndarray(3,)
