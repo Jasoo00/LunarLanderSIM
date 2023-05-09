@@ -59,3 +59,17 @@ def update_state(DB):
     x_2     = x_1 + (h/6)*(K1 + 2*K2 + 2*K3 + K4)
 
     DB.x    = x_2
+
+
+    # ### RK5 Integration ###
+    # x_1     = DB.x
+
+    # h       = DB.del_t
+    # K1      = f(x_1,0, DB)
+    # K2      = f(x_1 + (1/4)*h*K1,0, DB)
+    # K3      = f(x_1 + (1/8)*h*K1 + (1/8)*h*K2,0, DB)
+    # K4      = f(x_1 + h*K3,0, DB)
+
+    # x_2     = x_1 + (h/6)*(K1 + 2*K2 + 2*K3 + K4)
+
+    # DB.x    = x_2
