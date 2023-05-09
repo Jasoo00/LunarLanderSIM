@@ -1,18 +1,24 @@
-### libraries ###
 import os
 import json
 import time
-import warnings
 
+### Numpy libraries ###
 from    numpy                   import  array, zeros, ones, eye, empty, linspace,\
                                         where, size, outer, cross, concatenate, reshape,\
                                         deg2rad, rad2deg, cos, sin, tan, pi
 from    numpy.linalg            import  inv, norm
-from    threading               import  Thread
+
+### Visualiser libraries ###
 from    mpl_toolkits.mplot3d    import  Axes3D
 from    matplotlib.animation    import  FuncAnimation
 import  matplotlib.pyplot       as      plt
 
+### Threading library ###
+from    threading               import  Thread
+
+### ROS libraries ###
+import  rospy
+from std_msgs.msg               import Float32MultiArray
 
 
 

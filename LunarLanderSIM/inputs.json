@@ -7,7 +7,7 @@
 
         "PARAM_FRAME"           :   30,
 
-        "PARAM_INIT_POSE"       :   [0,0,5e6, 1000,0,0, 0,0,0, 0,0.0002,0],
+        "PARAM_INIT_POSE"       :   [0,0,5e6, 0,0,-1000, 0,-1.6,0, 0,0.0003,0],
         
         "PARAM_LANDPOINT_LAT"   :   30,
 
