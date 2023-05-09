@@ -35,13 +35,18 @@ class DataBase:
         self.x                  = array(sim_params["PARAM_INIT_POSE"])      # simulation initial state
         self.x_dot              = zeros(12)                                 # simulation initial state
         self.u                  = zeros(11)                                 # thrusts input [N] : ndarray(11,)
-        self.u[4]=0.0001
-        self.u[8]=0.0001
+
+        self.u = 10* ones(11)
+        # self.u[0] = 1000
 
         self.sum_M              = zeros(3)                                  # sum of moments    : ndarray(3,)
         self.sum_F              = zeros(3)                                  # sum of thrusts    : ndarray(3,)
 
         self.g_M                = 0
+
+
+        ### Remaining fuel percentages ###
+        self.remaining_fuel     = ones(3)
 
 
         ### Model Parameters ###
@@ -106,6 +111,7 @@ class DataBase:
                                     AM_RCS2_oxid_tank]
 
 
+
         # Initialize
 
         for component in self.components: 
@@ -120,8 +126,6 @@ class DataBase:
             C_i2b               = C_W2B(O_i[0],O_i[1],O_i[2])
 
             self.g_M            = C_i2b @ (-r_i * G*M/(norm(r_i)**3))
-
-
 
 
             ### total mass ###
@@ -157,13 +161,15 @@ class DataBase:
         for component in self.components: 
 
             component.update()
+
+            # print(self.remaining_fuel)
+            # print(self.components[3].m_p)
             
             m_i                 = component.m
             p_cgi               = component.p_cg
             F_i                 = component.uvec
             M_i                 = component.Mvec
-    
-            # print(M_i)
+
 
             ### force & moments ###
             self.sum_F          += F_i

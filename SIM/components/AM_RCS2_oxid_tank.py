@@ -35,10 +35,11 @@ class AMRCS2OxidTank:
 
         self.p_cg    = (p_scg * self.m_s + p_pcg * self.m_p) / (self.m_p + self.m_s)
 
-        if self.m_p < 0:  
+        if self.m_p <= 0:  
 
             self.m_p  = 0
             self.p_cg = self.p_c
+            self.DB.u[6:] = zeros(5)
 
         else:
 

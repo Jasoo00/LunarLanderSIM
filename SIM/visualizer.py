@@ -11,9 +11,13 @@ class Visualizer:
 
 
         ### init figures ###
-        self.fig            = plt.figure(figsize=(15,15))
+        self.fig            = plt.figure(facecolor="black",figsize=(15,15))
         self.viz_world      = self.fig.add_subplot(1,2,1,projection="3d")
+        self.viz_world.patch.set_facecolor('black')
+        self.viz_world.set_title('Overall View',c="white",style="italic")
         self.viz_body       = self.fig.add_subplot(1,2,2,projection="3d")
+        self.viz_body.patch.set_facecolor('black')
+        self.viz_body.set_title('Lander Detailed View',c="white",style="italic")
 
 
         ### plot size and options ###
@@ -39,7 +43,7 @@ class Visualizer:
         self.moon_y         = outer(R_m*sin(moon_u),        sin(moon_v))
         self.moon_z         = outer(R_m*ones(size(moon_u)), cos(moon_v))
 
-        self.viz_world.plot_surface(self.moon_x, self.moon_y, self.moon_z, rstride=1, cstride=1, color="gray", alpha=0.3)
+        self.viz_world.plot_surface(self.moon_x, self.moon_y, self.moon_z, rstride=1, cstride=1, color="white", alpha=0.3)
 
 
         ### init trajectory ###
@@ -57,12 +61,12 @@ class Visualizer:
         self.y_i            = array([0,1,0])
         self.z_i            = array([0,0,1])
 
-        self.LCI_x          = self.viz_world.quiver(0,0,0, self.x_i[0],self.x_i[1],self.x_i[2], color="black",arrow_length_ratio=0.1,length=2e6)
-        self.LCI_y          = self.viz_world.quiver(0,0,0, self.y_i[0],self.y_i[1],self.y_i[2], color="black",arrow_length_ratio=0.1,length=2e6)
-        self.LCI_z          = self.viz_world.quiver(0,0,0, self.z_i[0],self.z_i[1],self.z_i[2], color="black",arrow_length_ratio=0.1,length=2e6)
-        self.LCI_xt         = self.viz_world.text(2e6*self.x_i[0]+0.05,2e6*self.x_i[1],2e6*self.x_i[2],r"$x_I$",color="black")
-        self.LCI_yt         = self.viz_world.text(2e6*self.y_i[0],2e6*self.y_i[1]+0.05,2e6*self.y_i[2],r"$y_I$",color="black")
-        self.LCI_zt         = self.viz_world.text(2e6*self.z_i[0],2e6*self.z_i[1],2e6*self.z_i[2]+0.05,r"$z_I$",color="black")
+        self.LCI_x          = self.viz_world.quiver(0,0,0, self.x_i[0],self.x_i[1],self.x_i[2], color="gray",arrow_length_ratio=0.1,length=2.5e6)
+        self.LCI_y          = self.viz_world.quiver(0,0,0, self.y_i[0],self.y_i[1],self.y_i[2], color="gray",arrow_length_ratio=0.1,length=2.5e6)
+        self.LCI_z          = self.viz_world.quiver(0,0,0, self.z_i[0],self.z_i[1],self.z_i[2], color="gray",arrow_length_ratio=0.1,length=2.5e6)
+        self.LCI_xt         = self.viz_world.text(2.5e6*self.x_i[0]+0.05,2.5e6*self.x_i[1],2.5e6*self.x_i[2],r"$x_I$",color="gray")
+        self.LCI_yt         = self.viz_world.text(2.5e6*self.y_i[0],2.5e6*self.y_i[1]+0.05,2.5e6*self.y_i[2],r"$y_I$",color="gray")
+        self.LCI_zt         = self.viz_world.text(2.5e6*self.z_i[0],2.5e6*self.z_i[1],2.5e6*self.z_i[2]+0.05,r"$z_I$",color="gray")
 
 
         """
@@ -101,7 +105,7 @@ class Visualizer:
         """
         trajectory
         """
-        self.trajplot,      = self.viz_world.plot(0,0,0)
+        self.trajplot,      = self.viz_world.plot([0],[0],[0])
 
 
         """
@@ -118,7 +122,7 @@ class Visualizer:
         """
         body cubelines
         """
-        self.cubelines,     = self.viz_body.plot(0,0,0)
+        self.cubelines,     = self.viz_body.plot([0],[0],[0])
 
 
         """
@@ -126,6 +130,11 @@ class Visualizer:
         """
         self.thrusts        = self.viz_body.quiver(0,0,0,0,0,0)
         
+        """
+        Fuel percentages
+        """
+        self.fuel           = self.viz_body.text(0,0,0,r"$0$")
+
 
     def generate_cubes(self):
 
@@ -148,6 +157,7 @@ class Visualizer:
             cubelines[:,idx*17 + 7] = center + array([ w, w, h])
             cubelines[:,idx*17 + 8] = center + array([ w,-w, h])
             cubelines[:,idx*17 + 9] = center + array([-w,-w, h])
+
             cubelines[:,idx*17 + 10] = center + array([-w, w,-h])
             cubelines[:,idx*17 + 11] = center + array([-w, w, h])
             cubelines[:,idx*17 + 12] = center + array([ w, w,-h])
@@ -193,6 +203,9 @@ class Visualizer:
         r_w                 = C_i2w.T @ array([0,0,R_m])
         r_b                 = x[:3]
 
+        ### components ###
+        components          = self.DB.components
+        
         ### update trajectory ###
         self.traj           = concatenate((self.traj,reshape(r_b,(3,1))),axis=1)
 
@@ -256,7 +269,7 @@ class Visualizer:
         """
         self.trajplot.remove()
 
-        self.trajplot,      = self.viz_world.plot(self.traj[0,-1-frame:], self.traj[1,-1-frame:], self.traj[2,-1-frame:],'k-')
+        self.trajplot,      = self.viz_world.plot(self.traj[0,-1-frame:], self.traj[1,-1-frame:], self.traj[2,-1-frame:],"r-",alpha=0.5)
 
 
 
@@ -268,23 +281,48 @@ class Visualizer:
 
         self.viz_body.lines.clear()
 
-        for coll in self.viz_body.collections:
-            coll.remove()
+        self.cubelines,     = self.viz_body.plot(cubes[0],cubes[1],cubes[2],"w-",alpha=0.3)   
 
-        self.cubelines,     = self.viz_body.plot(cubes[0],cubes[1],cubes[2],"k-",alpha=0.1)                
+        thruster_x          = [0]*len(components)
+        thruster_y          = [0]*len(components)
+        thruster_z          = [0]*len(components)
 
-        # for idx, component in enumerate(self.DB.components):
+        uvec_x              = [0]*len(components)
+        uvec_y              = [0]*len(components)
+        uvec_z              = [0]*len(components)
 
-        #     uvec            = C_i2b.T @ (-component.uvec)
-        #     p_c             = C_i2b.T @ component.p_c
+        for idx, component in enumerate(components):
 
-        #     self.cubelines, = self.viz_body.plot(cubes[0,idx*17:idx*17+17],cubes[1,idx*17:idx*17+17],cubes[2,idx*17:idx*17+17],"k-",alpha=0.1)                
-        #     self.thrusts    = self.viz_body.quiver(p_c[0],p_c[1],p_c[2],uvec[0],uvec[1],uvec[2],color="red",arrow_length_ratio=0.2,length=50000,linewidth = 2)
-        
-        
+            uvec            = C_i2b.T @ (-component.uvec)
+            p_c             = C_i2b.T @ component.p_c
+
+            thruster_x[idx] = p_c[0]
+            thruster_y[idx] = p_c[1]
+            thruster_z[idx] = p_c[2]
+
+            uvec_x[idx]     = uvec[0]
+            uvec_y[idx]     = uvec[1]
+            uvec_z[idx]     = uvec[2]
+
+            # self.cubelines, = self.viz_body.plot(cubes[0,idx*17:idx*17+17],cubes[1,idx*17:idx*17+17],cubes[2,idx*17:idx*17+17],"w-",alpha=0.3)                
+
+        self.thrusts.remove()
+            
+        self.thrusts        = self.viz_body.quiver(thruster_x,thruster_y,thruster_z,uvec_x,uvec_y,uvec_z,color="red",arrow_length_ratio=0.2,length=0.1,linewidth = 2)
+
+        self.fuel.remove()
+
+        self.fuel           = self.viz_body.text(5,5,0,f"Descent Engine  | {round(self.DB.remaining_fuel[0]*100,1)}%\n\
+RCS 1                 | {round(self.DB.remaining_fuel[1]*100,1)}%\n\
+RCS 2                 | {round(self.DB.remaining_fuel[2]*100,1)}%",color="white")
+
+
         """
         Body coordinate system
         """
+        self.Body2_x.remove()
+        self.Body2_y.remove()
+        self.Body2_z.remove()
         self.Body2_xt.remove()
         self.Body2_yt.remove()
         self.Body2_zt.remove()
@@ -295,8 +333,7 @@ class Visualizer:
         self.Body2_xt       = self.viz_body.text(3.2*x_b[0],3.2*x_b[1],3.2*x_b[2],r"$x_b$",color="red")
         self.Body2_yt       = self.viz_body.text(3.2*y_b[0],3.2*y_b[1],3.2*y_b[2],r"$y_b$",color="green")
         self.Body2_zt       = self.viz_body.text(3.2*z_b[0],3.2*z_b[1],3.2*z_b[2],r"$z_b$",color="blue")
-
-        
+            
 
     def run(self):
 

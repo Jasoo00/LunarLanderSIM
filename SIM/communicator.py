@@ -20,5 +20,3 @@ class Communicator:
         ctrl_inputs = ctrl_msg.data
 
         self.DB.u   = array(ctrl_inputs)
-
-        print(self.DB.u)

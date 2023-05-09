@@ -35,13 +35,14 @@ class AMRCS1FuelTank:
 
         self.p_cg    = (p_scg * self.m_s + p_pcg * self.m_p) / (self.m_p + self.m_s)
 
-        if self.m_p < 0:  
+        if self.m_p <= 0:  
 
-            self.m_p  = 0
-            self.p_cg = self.p_c
+            self.m_p                    = 0
+            self.p_cg                   = self.p_c
+            self.DB.u[1:6]              = zeros(5)
 
         else:
 
             pass
-
         
+        self.DB.remaining_fuel[1]   = self.m_p/self.m_p0
