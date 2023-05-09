@@ -3,8 +3,9 @@ from components         import *
 from lib                import *
 
 from database           import DataBase
-from visualizer         import Visualizer
 from physics_engine     import PhysicsEngine
+from visualizer         import Visualizer
+from communicator       import Communicator
 
 
 class Simulator:
@@ -16,6 +17,7 @@ class Simulator:
         self.DB     = DataBase      (inputs)
         self.viz    = Visualizer    (self.DB)
         self.PE     = PhysicsEngine (self.DB)
+        self.com    = Communicator  (self.DB)
 
         self.PE.start()
         self.viz.run()

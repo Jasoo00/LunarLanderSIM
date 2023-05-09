@@ -36,7 +36,6 @@ class DataBase:
         self.x_dot              = zeros(12)                                 # simulation initial state
         self.u                  = zeros(11)                                 # thrusts input [N] : ndarray(11,)
 
-
         self.sum_M              = zeros(3)                                  # sum of moments    : ndarray(3,)
         self.sum_F              = zeros(3)                                  # sum of thrusts    : ndarray(3,)
 
@@ -186,4 +185,3 @@ class DataBase:
             self.I              += p_cg_X @ (-p_cg_X) * m_i
             
         self.p_cg               = self.p_cg / self.m
-

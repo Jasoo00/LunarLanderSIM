@@ -43,7 +43,7 @@ class Visualizer:
 
 
         ### init trajectory ###
-        traj_max_length     = int(2e4)
+        traj_max_length     = int(30)
         self.traj           = empty((3,traj_max_length))
 
 
