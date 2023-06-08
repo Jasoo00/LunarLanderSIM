@@ -4,6 +4,8 @@ from lib.transformations    import *
 
 def f(x, t, DB):
 
+    ### 6-DOF Equation of motion ###
+    
     r_i       = x[:3]
     v_b       = x[3:6]
     O_i       = x[6:9]
@@ -36,44 +38,13 @@ def f(x, t, DB):
     DB.x_dot    = x_dot
     DB.g_M      = g_M
 
-    # print("sum_M",sum_M)
-    # print("w_b_dot",w_b_dot)
-    # print("w_b",w_b)
-    # print("O_i",O_i)
     return x_dot
 
 
 def update_state(DB):
 
-    ang_lim = 10
-
-    ### RK4 Integration ###
-    x_1     = DB.x
-
-    h       = DB.del_t
-    K1      = f(x_1,0, DB)
-    K2      = f(x_1 + 0.5*h*K1,0, DB)
-    K3      = f(x_1 + 0.5*h*K2,0, DB)
-    K4      = f(x_1 + h*K3,0, DB)
-
-    x_2     = x_1 + (h/6)*(K1 + 2*K2 + 2*K3 + K4)
-
-    DB.x    = x_2
-
-
-    # ### RK5 Integration ###
-    # x_1     = DB.x
-
-    # h       = DB.del_t
-    # K1      = f(x_1,0, DB)
-    # K2      = f(x_1 + (1/4)*h*K1,0, DB)
-    # K3      = f(x_1 + (1/8)*h*K1 + (1/8)*h*K2,0, DB)
-    # K4      = f(x_1 + h*K3,0, DB)
-
-    # x_2     = x_1 + (h/6)*(K1 + 2*K2 + 2*K3 + K4)
-
-    # DB.x    = x_2
     ### RK 6 Integration ###
+    
     x_1     = DB.x
 
     K1      = DB.del_t*f(x_1, 0, DB)
@@ -87,4 +58,4 @@ def update_state(DB):
 
     x_2     = x_1 + (3/40)*K1 + (875/2244)*K3 + (23/72)*K4 + (264/1955)*K5 + (125/11592)*K7 +(43/616)*K8
 
-    DB.x       = x_2
+    DB.x    = x_2

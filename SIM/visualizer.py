@@ -338,6 +338,6 @@ RCS 2                 | {round(self.DB.remaining_fuel[2]*100,1)}%",color="white"
 
     def run(self):
 
-        sim_viz = FuncAnimation(self.fig, self.update, interval=20, repeat=False)
+        sim_viz = FuncAnimation(self.fig, self.update, interval=20, repeat=False, cache_frame_data=False)
 
         plt.show()

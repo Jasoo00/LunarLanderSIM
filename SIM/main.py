@@ -20,6 +20,7 @@ class Simulator:
         self.com    = Communicator  (self.DB)
 
         self.PE.start()
+        self.com.start()
         self.viz.run()
 
 
